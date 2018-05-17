@@ -1,0 +1,43 @@
+@echo off
+set file1=%1
+set file2=%2
+if not exist "%file1%" (
+	goto :ERROR1
+)
+if not exist "%file2%" (
+	goto :ERROR2
+)
+
+:: This will read the first file into an array of variables and populate it 
+setlocal EnableExtensions EnableDelayedExpansion
+for /f "delims=" %%a in ('type "%file1%"') do (
+	set /a count1+=1
+	set "line1[!count1!]=%%a"
+)
+:: This will read the second file into an array of variables and populate it 
+for /f "delims=" %%a in ('type "%file2%"') do (
+	set /a count2+=1
+	set "line2[!count2!]=%%a"
+)
+
+:: Display common elements of the arrays
+for /L %%i in (1,1,%count1%) do (
+	for /L %%j in (1,1,%count2%) do (
+		if "!line1[%%i]!"=="!line2[%%j]!" (
+			echo "!line1[%%i]!"
+		)
+	)
+)
+
+exit
+
+::***************************************************
+:ERROR1
+echo "  The file "%file1%" dos not exist !"
+goto :ERREXIT
+:ERROR2
+echo "  The file "%file2%" dos not exist !"
+goto :ERREXIT
+:ERREXIT
+exit /b
+::***************************************************
