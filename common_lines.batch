@@ -1,43 +1,43 @@
-@echo off
-set file1=%1
-set file2=%2
-if not exist "%file1%" (
-	goto :ERROR1
+@Echo Off
+Set File1=%1
+Set File2=%2
+If Not Exist "%File1%" (
+	Goto :ERROR1
 )
 if not exist "%file2%" (
-	goto :ERROR2
+	Goto :ERROR2
 )
 
 :: This will read the first file into an array of variables and populate it 
 setlocal EnableExtensions EnableDelayedExpansion
-for /f "delims=" %%a in ('type "%file1%"') do (
-	set /a count1+=1
-	set "line1[!count1!]=%%a"
+For /F "Delims=" %%A In ('Type "%File1%"') Do (
+	Set /A Count1+=1
+	Set "Line1[!Count1!]=%%A"
 )
 :: This will read the second file into an array of variables and populate it 
-for /f "delims=" %%a in ('type "%file2%"') do (
-	set /a count2+=1
-	set "line2[!count2!]=%%a"
+For /F "Delims=" %%A In ('Type "%File2%"') Do (
+	Set /A Count2+=1
+	Set "Line2[!Count2!]=%%A"
 )
 
 :: Display common elements of the arrays
-for /L %%i in (1,1,%count1%) do (
-	for /L %%j in (1,1,%count2%) do (
-		if "!line1[%%i]!"=="!line2[%%j]!" (
-			echo "!line1[%%i]!"
+For /L %%I In (1,1,%Count1%) Do (
+	For /L %%J In (1,1,%Count2%) Do (
+		If "!Line1[%%I]!"=="!Line2[%%J]!" (
+			Echo "!Line1[%%I]!"
 		)
 	)
 )
 
-exit
+Exit 
 
 ::***************************************************
 :ERROR1
-echo "  The file "%file1%" dos not exist !"
-goto :ERREXIT
+Echo "  The file "%File1%" does not exist !"
+Goto :ERREXIT
 :ERROR2
-echo "  The file "%file2%" dos not exist !"
-goto :ERREXIT
+Echo "  The file "%File2%" does not exist !"
+Goto :ERREXIT
 :ERREXIT
-exit /b
+Exit /B
 ::***************************************************
