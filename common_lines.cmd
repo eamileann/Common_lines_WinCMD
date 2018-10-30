@@ -1,3 +1,5 @@
+:: TODO repair bug when there are multiple identical lines in one file but only one in another, printing one/multiple records to output (depends on which file is File1/File2)
+
 @Echo Off
 Set File1=%1
 Set File2=%2
